@@ -10,16 +10,22 @@ BT_FG = '#828282'
 
 class Setup:
     def sent_file(self):
-        file_url = fr'{self.file_entry.get()}'
-        file_path = self.path_entry.get()
-        obj = Download(file_url, file_path)
-        obj.download_file()
+        try:
+            file_url = fr'{self.file_entry.get()}'
+            file_path = self.path_entry.get()
+            obj = Download(file_url, file_path)
+            if len(self.path_entry.get()) != 0:
+                obj.download_file()
+                self.message.config(text=f"'{obj.video_title}' downloaded.")
+            else:
+                self.message.config(text=f"Enter the location to save.")
+        except:
+            self.message.config(text="Oops! Something went wrong.Try again")
 
     def clear_content(self):
         self.file_entry.delete(0, END)
         self.path_entry.delete(0, END)
         self.message.config(text="")
-        # self.filename_entry.delete(0, END)
 
     def __init__(self):
         self.window = Tk()
@@ -44,12 +50,6 @@ class Setup:
         self.path_entry = Entry(width=45, bg='#202020', fg='white')
         self.path_entry.insert(0, SAVE_LOCATION)
         self.path_entry.grid(row=3, column=2, padx=30, pady=20)
-
-        # self.filename = Label(text="Filename", font=('Open Sans Condensed', 10, 'bold'), bg=BG_COLOR, fg=FG_COLOR)
-        # self.filename.grid(row=4, column=1)
-        #
-        # self.filename_entry = Entry(width=45, bg='#202020', fg='white')
-        # self.filename_entry.grid(row=4, column=2)
 
         self.download_bt = Button(text="Download", font=('Open Sans Condensed', 10, 'bold'), bg=BT_BG, fg=BT_FG
                                   , command=self.sent_file)
