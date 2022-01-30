@@ -11,7 +11,7 @@ class Download:
 
     def download_file(self):
         self.video.download(self.save_path, self.video_title + '.mp4')
-        print(f"{self.yt.title} Downloaded")
+        # print(f"{self.yt.title} Downloaded")
 
 
 
